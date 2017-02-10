@@ -18,6 +18,8 @@ int main() {
     fstream finalOut;
     fstream store;
     int run = 0;
+    int countWords;
+    int counter;
     start.open("index.txt", ios::in);
     middle.open("holder.txt", ios::out);
     finalOut.open("motivation.txt", ios::out);
@@ -25,15 +27,27 @@ int main() {
     string words;
     getline(start, quotes);
     while(start){
+        countWords = 0;
+        counter = 0;
         if (run > 0){
             middle.open("holder.txt", ios::out);
         }
         middle << quotes;
         middle.close();
         middle.open("holder.txt", ios::in);
-        while(!middle.eof()){
+        while (!middle.eof()) {
+            countWords++;
             middle >> words;
-            finalOut << words << " ";
+        }
+        middle.close();
+        middle.open("holder.txt", ios::in);
+        while(!middle.eof()){
+            counter++;
+            middle >> words;
+            if(counter != countWords)
+                finalOut << words << " ";
+            else
+                finalOut << words;
         }
         finalOut << endl;
         run++;
